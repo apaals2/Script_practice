@@ -1,8 +1,17 @@
-# 설명: 크기가 0보다 큰 파일만 출력 + 크기 기준으로 정렬
+# 설명: 파일 크기 단위로 출력
 # 키워드: os.path.getsize(), if
 
 import os
 
+
+def format_size(size):
+    if size >= 1024**2:
+        return f"{size / (1024**2):.2f}MB"
+    elif size >=1024:
+        return f"{size / 1024:.2f}KB"
+    else:
+        return f"{size}B"
+    
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(BASE_DIR, "../etc/log")
 
@@ -12,12 +21,8 @@ file_info_list = []
 for file in os.listdir(file_path):
     path = os.path.join(file_path, file)
 
-    # 모든 파일을 크기 기준으로 정렬
-    if os.path.isfile(path):
+    # 단위로 출력
+    if os.path.isfile(path) and os.path.getsize(path):
         size = os.path.getsize(path)
-        file_info_list.append((file,size))
-
-file_info_list.sort(key=lambda x:x[1], reverse=True) # False 내림차순
-
-for file, size in file_info_list:
-    print(f"파일명: {file}, 크기: {size}")
+        readable_size = format_size(size)
+        print(f"파일명: {file}, 크기: {readable_size}")

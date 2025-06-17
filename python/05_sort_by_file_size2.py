@@ -1,4 +1,8 @@
 # 설명: 모든 파일 리스트에서 숨김/일반 구분 후 크기순 출력
+# 설명: 디렉토리 내 파일을 크기 기준으로 오름차순 정렬 출력
+# 키워드: sorted(), os.path.getsize(), lambda
+
+
 import os
 
 def format_size(size):
